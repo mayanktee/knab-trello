@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>Trello-testFramework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+
+    <build>
+        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <!-- Execution for TestRunner1 -->
+                        <execution>
+                            <id>runner1</id>
+                            <goals>
+                                <goal>java</goal>
+                            </goals>
+                            <configuration>
+                                <mainClass>cucumber.Options.TestRunnerAPI</mainClass>
+                            </configuration>
+                        </execution>
+                        <!-- Execution for TestRunner2 -->
+                        <execution>
+                            <id>runner2</id>
+                            <goals>
+                                <goal>java</goal>
+                            </goals>
+                            <configuration>
+                                <mainClass>cucumber.Options.TestRunnerUI</mainClass>
+                            </configuration>
+                        </execution>
+                        <!-- Add more executions for additional runner classes if needed -->
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                    <configuration>
+                        <testFailureIgnore>true</testFailureIgnore>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>net.masterthought</groupId>
+                    <artifactId>cucumber-reporting-parallel</artifactId>
+                    <version>5.7.5</version>
+                    <executions>
+                        <execution>
+                            <id>execution</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <projectName>cucumber-jvm-example</projectName>
+                                <!-- optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified -->
+                                <skip>false</skip>
+                                <!-- output directory for the generated report -->
+                                <outputDirectory>${project.build.directory}</outputDirectory>
+                                <!-- optional, defaults to outputDirectory if not specified -->
+                                <inputDirectory>${project.build.directory}/jsonReports</inputDirectory>
+                                <jsonFiles>
+                                    <!-- supports wildcard or name pattern -->
+                                    <param>**/*.json</param>
+                                </jsonFiles>
+                                <!-- optional, defaults to outputDirectory if not specified -->
+                                <parallelTesting>false</parallelTesting>
+                                <!-- optional, set true to group features by its Ids -->
+                                <mergeFeaturesById>false</mergeFeaturesById>
+                                <!-- optional, set true to get a final report with latest results of the same test from different test runs -->
+                                <mergeFeaturesWithRetest>false</mergeFeaturesWithRetest>
+                                <!-- optional, set true to fail build on test failures -->
+                                <checkBuildResult>false</checkBuildResult>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.9.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.8.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>6.9.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <version>6.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>6.9.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.5.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/json-path -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220924</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10</version>
+        </dependency>
+
+
+
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.1.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.4.0</version> <!-- Use the latest version available -->
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/jline/jline -->
+        <dependency>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>2.11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.thucydides/thucydides-core -->
+        <dependency>
+            <groupId>net.thucydides</groupId>
+            <artifactId>thucydides-core</artifactId>
+            <version>0.9.275</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>5.0.9</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/tech.grasshopper/extentreports-cucumber6-adapter -->
+        <dependency>
+            <groupId>tech.grasshopper</groupId>
+            <artifactId>extentreports-cucumber6-adapter</artifactId>
+            <version>2.9.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.30</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.glassfish.corba/glassfish-corba-orb -->
+        <dependency>
+            <groupId>org.glassfish.corba</groupId>
+            <artifactId>glassfish-corba-orb</artifactId>
+            <version>4.2.4</version>
+        </dependency>
+
+
+    </dependencies>
+
+</project>
